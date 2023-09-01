@@ -1,2 +1,1 @@
-# OpenAI-MVP
-OpenAI-MVP
+# Openai_Sk
