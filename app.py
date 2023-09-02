@@ -24,26 +24,25 @@ def first_prompt_setting():
 
 # create_page()는  주어진 스토리 콘텐츠로 Streamlight 앱에 페이지를 만듭니다
 async def create_page(index, page, story):
-    # imgprom = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo",
-    #     messages=[{"role": "user", "content": f"{story} 영어로 번역해줘"}],
-    # )
+    imgprom = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": f"{story} 영어로 번역해줘"}],
+    )
 
-    # imgprom = bytes(imgprom["choices"][0]["message"]["content"], encoding="utf-8").decode(
-    #     "utf-8"
-    # )
-    # imgprom.replace("\n", "")
-    # imgprom = imgprom[:330]
-    # img = openai.Image.create(
-    #     prompt=imgprom + "pastel tone, cartoon style, no text",
-    #     n=1,
-    #     size="256x256",
-    # )
+    imgprom = bytes(imgprom["choices"][0]["message"]["content"], encoding="utf-8").decode(
+        "utf-8"
+    )
+    imgprom.replace("\n", "")
+    imgprom = imgprom[:330]
+    img = openai.Image.create(
+        prompt=imgprom + "pastel tone, cartoon style, no text",
+        n=1,
+        size="256x256",
+    )
 
     st.markdown("""---""")
     st.write(str(index + 1), "페이지")
-    # st.image(img["data"][0]["url"])
-    st.image("https://miro.medium.com/v2/resize:fit:1000/0*YISbBYJg5hkJGcQd.png")
+    st.image(img["data"][0]["url"])
     
     st.write(page)
 
@@ -65,23 +64,20 @@ async def create_story(content, story):
 # Exmaple Return Data는 다음과 같습니다 : {"title" : "title", "content", "content"}
 def get_story(age, gender, theme, genre, lang):
     with st.spinner('맞춤형 동화를 생성중입니다..'):
-        # res = openai.ChatCompletion.create(
-        #     model="gpt-3.5-turbo",
-        #     messages=[
-        #         {
-        #             "role": "user",
-        #             "content": f"{age}살 {gender}아이를 위한 {theme} 주제, {genre} 장르의 {lang} 동화하나 만들어줘, title : 제목과 content:내용식으로 써주고 json으로 대답해줘, 내용은 그냥 text로 써줘 ",
-        #         }
+        res = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"{age}살 {gender}아이를 위한 {theme} 주제, {genre} 장르의 {lang} 동화하나 만들어줘, title : 제목과 content:내용식으로 써주고 json으로 대답해줘, 내용은 그냥 text로 써줘 ",
+                }
 
-        #     ],
-        # )
-        # story = res["choices"][0]["message"]["content"]
-        # story = story.replace("\n", "")
-        # story = json.loads(bytes(story, encoding='utf-8').decode('utf-8'))
-        story = {
-        "title": "검은 고양이의 사랑 이야기",
-        "content": "옛날 어느 작은 마을에 검은색 털을 가진 작은 고양이 noir이 살고 있었어요. noir은 평소에 조용하고 착한 고양이였지만, 사람들은 그의 검은색 털 때문에 두려워하고 피해갔어요. 그런데 어느 날, 마을에 위험한 쥐들이 나타나기 시작했어요. 쥐들은 밤에 나와서 사람들의 음식을 훔쳐갔고, 집들을 파괴하기 시작했어요. 마을 사람들은 쥐들 때문에 고민이 많아졌어요. 그런데, noir이 쥐들을 쫓아내려고 하기 시작했어요. noir은 밤마다 쥐들이 나타나는 곳을 찾아가서 그들을 쫓아냈어요. 처음에는 noir도 쥐들이 무서웠지만, 매일매일 용기를 내서 쥐들을 쫓아냈어요. 그러면서 noir은 강해졌고, 결국 마을의 쥐들을 모두 쫓아내게 되었어요. 마을 사람들은 noir의 용감함에 감동받아서 그를 마을의 영웅으로 삼았어요. noir은 더 이상 검은색 털 때문에 두려워하지 않았고, 사람들과 함께 행복하게 지냈어요. 그리고 noir은 사람들에게 자신의 진짜 가치는 외모가 아닌 내면에 있다는 것을 보여줬어요."
-        }
+            ],
+        )
+        story = res["choices"][0]["message"]["content"]
+        story = story.replace("\n", "")
+        story = json.loads(bytes(story, encoding='utf-8').decode('utf-8'))
+        
 
         return story
 
@@ -107,8 +103,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # 기초 프롬프트 셋팅을 진행합니다.
 with st.spinner('기초 설정 중입니다.. ( MVP 버전에서만 진행합니다 )'):
-    # first_prompt_setting()    
-    pass
+    first_prompt_setting()    
 
 # 웹 사이트의 제목을 생성합니다.
 st.title("📖 동화 생성기")
