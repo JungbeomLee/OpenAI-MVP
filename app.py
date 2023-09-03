@@ -8,7 +8,7 @@ from gtts import gTTS
 # first_prompt_setting()은 기초 프롬프트를 셋팅해줍니다.
 def first_prompt_setting():
     openai.ChatCompletion.create(
-    model="gpt-4",
+    model="gpt-3.5-turbo",
 
     messages=[
         {
@@ -87,7 +87,7 @@ def create_story(content, story):
 def get_story(inter, subject, theme):
     with st.spinner('맞춤형 동화를 생성중입니다..'):
         res = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=[
                 {
                     "role": "user",
@@ -118,7 +118,8 @@ def display_story(story):
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 with st.spinner("초기 설정을 진행중입니다.. (MVP 버전에서만 진행함)"):
-    res = first_prompt_setting()
+    # res = first_prompt_setting()
+    pass
 
 # Set the title of the web page.
 st.title("📖 동화 생성기")
